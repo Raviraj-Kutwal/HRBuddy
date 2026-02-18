@@ -1,0 +1,41 @@
+# --- Python Virtual Environments ---
+# This covers any folder named myvenv anywhere in the project
+**/myvenv/
+Backend/myvenv/
+
+# --- Environment Variables & Secrets ---
+.env
+*.env
+.flaskenv
+secrets.json
+
+# --- Python Cache & Compiled Files ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# --- FastAPI/Uvicorn Specific ---
+# If you use a custom log file
+*.log
+
+# --- Database (Local Development) ---
+*.db
+*.sqlite3
+
+# --- IDEs & Editors ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS Specific ---
+.DS_Store
+Thumbs.db
+
+# --- Dependency Management ---
+# Optional: Keep these if you want to force specific lock files
+# .python-version
