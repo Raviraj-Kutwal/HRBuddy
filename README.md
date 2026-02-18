@@ -1,4 +1,4 @@
-🚀 Employee Management System API
+🚀 HRBuddy
 
 A full-stack Employee Management System built with a powerful FastAPI backend and a modern React.js frontend.
 
