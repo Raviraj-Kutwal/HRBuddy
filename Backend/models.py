@@ -1,4 +1,4 @@
-from sqlalchemy import declarative_base
+from sqlalchemy.orm import  declarative_base
 from sqlalchemy import Column ,Integer,Float ,String,Boolean ,ForeignKey ,Enum ,Date
 import enum 
 from sqlalchemy.orm import relationship

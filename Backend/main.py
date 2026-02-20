@@ -1,8 +1,8 @@
 from fastapi import FastAPI ,Depends ,HTTPException ,Path
 from sqlalchemy.orm import Session
 from database import SessionLocal , engine
-from Backend import schemas
-from Backend import models 
+import schemas
+import models 
 
 # Create all tables
 models.Base.metadata.create_all(bind=engine)
@@ -27,16 +27,6 @@ def get_all_employees(db: Session = Depends(get_db)):
     employees = db.query(models.Employee).all()
     return employees
 
-
-@app.get("/employees/{employee_id}", response_model=schemas.EmployeeResponse)
-def get_employee_by_id(employee_id: int, db: Session = Depends(get_db)):
-    """Get a single employee by ID"""
-    employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
-    if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")
-    return employee
-
-
 @app.get("/employees/department/{department_name}", response_model=list[schemas.EmployeeResponse])
 def get_employees_by_department(
     department_name: str = Path(..., description="Enter the department name", example="HR"),
@@ -47,6 +37,17 @@ def get_employees_by_department(
     if not department:
         raise HTTPException(status_code=404, detail="Department not found")
     return department.employees
+
+@app.get("/employees/{employee_id}", response_model=schemas.EmployeeResponse)
+def get_employee_by_id(employee_id: int, db: Session = Depends(get_db)):
+    """Get a single employee by ID"""
+    employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
+    if not employee:
+        raise HTTPException(status_code=404, detail="Employee not found")
+    return employee
+
+
+
 
 
 @app.post("/employees", response_model=schemas.EmployeeResponse, status_code=201)
