@@ -6,7 +6,7 @@ Backend/myvenv/
 # --- Environment Variables & Secrets ---
 .env
 *.env
-.flaskenv
+
 secrets.json
 
 # --- Python Cache & Compiled Files ---
@@ -24,7 +24,7 @@ htmlcov/
 
 # --- Database (Local Development) ---
 *.db
-*.sqlite3
+
 
 # --- IDEs & Editors ---
 .vscode/
@@ -32,10 +32,6 @@ htmlcov/
 *.swp
 *.swo
 
-# --- OS Specific ---
-.DS_Store
-Thumbs.db
 
-# --- Dependency Management ---
-# Optional: Keep these if you want to force specific lock files
-# .python-version
+
+
