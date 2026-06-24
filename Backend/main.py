@@ -1,4 +1,6 @@
+from typing import Optional
 from fastapi import FastAPI ,Depends ,HTTPException ,Path
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import SessionLocal , engine
 import schemas
@@ -7,6 +9,15 @@ import models
 # Create all tables
 models.Base.metadata.create_all(bind=engine)
 app=FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 #database_helper_function:
@@ -22,21 +33,19 @@ def get_db():
 # ══════════════════════════════════════════════════════════════
 
 @app.get("/employees", response_model=list[schemas.EmployeeResponse])
-def get_all_employees(db: Session = Depends(get_db)):
-    """Get all employees"""
-    employees = db.query(models.Employee).all()
-    return employees
-
-@app.get("/employees/department/{department_name}", response_model=list[schemas.EmployeeResponse])
-def get_employees_by_department(
-    department_name: str = Path(..., description="Enter the department name", example="HR"),
+def get_all_employees(
+    department_name: Optional[str] = None,
     db: Session = Depends(get_db)
 ):
-    """Get all employees in a specific department"""
-    department = db.query(models.Department).filter(models.Department.name == department_name).first()
-    if not department:
-        raise HTTPException(status_code=404, detail="Department not found")
-    return department.employees
+    """Get all employees, optionally filtered by department"""
+    if department_name:
+        department = db.query(models.Department).filter(models.Department.name == department_name).first()
+        if not department:
+            raise HTTPException(status_code=404, detail="Department not found")
+        return department.employees
+        
+    employees = db.query(models.Employee).all()
+    return employees
 
 @app.get("/employees/{employee_id}", response_model=schemas.EmployeeResponse)
 def get_employee_by_id(employee_id: int, db: Session = Depends(get_db)):
@@ -124,31 +133,29 @@ def delete_employee(employee_id: int, db: Session = Depends(get_db)):
 # ══════════════════════════════════════════════════════════════
 
 @app.get("/salaries", response_model=list[schemas.SalaryResponse])
-def get_all_salaries(db: Session = Depends(get_db)):
-    """Get all salary records"""
+def get_all_salaries(
+    employee_id: Optional[int] = None,
+    department_name: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    """Get all salary records, optionally filtered by employee or department"""
+    if employee_id:
+        employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
+        if not employee:
+            raise HTTPException(status_code=404, detail="Employee not found")
+        return employee.salaries
+        
+    if department_name:
+        department = db.query(models.Department).filter(models.Department.name == department_name).first()
+        if not department:
+            raise HTTPException(status_code=404, detail="Department not found")
+        
+        salaries = []
+        for employee in department.employees:
+            salaries.extend(employee.salaries)
+        return salaries
+        
     salaries = db.query(models.Salary).all()
-    return salaries
-
-
-@app.get("/salaries/employee/{employee_id}", response_model=list[schemas.SalaryResponse])
-def get_employee_salaries(employee_id: int, db: Session = Depends(get_db)):
-    """Get salary history for a specific employee"""
-    employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
-    if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")
-    return employee.salaries
-
-
-@app.get("/salaries/department/{department_name}", response_model=list[schemas.SalaryResponse])
-def get_salaries_by_department(department_name: str, db: Session = Depends(get_db)):
-    """Get all salary records for employees in a specific department"""
-    department = db.query(models.Department).filter(models.Department.name == department_name).first()
-    if not department:
-        raise HTTPException(status_code=404, detail="Department not found")
-    
-    salaries = []
-    for employee in department.employees:
-        salaries.extend(employee.salaries)
     return salaries
 
 
@@ -204,31 +211,29 @@ def delete_salary(salary_id: int, db: Session = Depends(get_db)):
 # ══════════════════════════════════════════════════════════════
 
 @app.get("/attendance", response_model=list[schemas.AttendanceResponse])
-def get_all_attendance(db: Session = Depends(get_db)):
-    """Get all attendance records"""
+def get_all_attendance(
+    employee_id: Optional[int] = None,
+    department_name: Optional[str] = None,
+    db: Session = Depends(get_db)
+):
+    """Get all attendance records, optionally filtered by employee or department"""
+    if employee_id:
+        employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
+        if not employee:
+            raise HTTPException(status_code=404, detail="Employee not found")
+        return employee.attendance_records
+        
+    if department_name:
+        department = db.query(models.Department).filter(models.Department.name == department_name).first()
+        if not department:
+            raise HTTPException(status_code=404, detail="Department not found")
+        
+        attendance = []
+        for employee in department.employees:
+            attendance.extend(employee.attendance_records)
+        return attendance
+        
     attendance = db.query(models.Attendance).all()
-    return attendance
-
-
-@app.get("/attendance/employee/{employee_id}", response_model=list[schemas.AttendanceResponse])
-def get_employee_attendance(employee_id: int, db: Session = Depends(get_db)):
-    """Get attendance records for a specific employee"""
-    employee = db.query(models.Employee).filter(models.Employee.id == employee_id).first()
-    if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")
-    return employee.attendance_records
-
-
-@app.get("/attendance/department/{department_name}", response_model=list[schemas.AttendanceResponse])
-def get_attendance_by_department(department_name: str, db: Session = Depends(get_db)):
-    """Get all attendance records for employees in a specific department"""
-    department = db.query(models.Department).filter(models.Department.name == department_name).first()
-    if not department:
-        raise HTTPException(status_code=404, detail="Department not found")
-    
-    attendance = []
-    for employee in department.employees:
-        attendance.extend(employee.attendance_records)
     return attendance
 
 
