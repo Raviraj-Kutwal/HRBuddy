@@ -1,96 +1,135 @@
-🚀 HRBuddy
+# 🚀 HRBuddy
 
-A full-stack Employee Management System built with a powerful FastAPI backend and a modern React.js frontend.
+A **full-stack Employee Management System** built with a high-performance **FastAPI backend** and a modern **React.js frontend**.
 
-This project allows organizations to efficiently manage:
+HRBuddy helps organizations efficiently manage employee-related operations while providing **ML-powered employee attrition prediction** to support data-driven HR decisions.
 
-🏢 Departments
+## ✨ Features
 
-👨‍💼 Employees
+### 🏢 Department Management
 
-💰 Salaries
+* Create and manage departments
+* Unique department validation
+* Structured department responses
+* Department-employee relationship management
 
-📅 Attendance
+### 👨‍💼 Employee Management
 
-Designed with clean architecture, proper validation, and scalable structure — perfect for learning and real-world backend development.
+* Add and manage employees
+* Associate employees with departments
+* Email validation using Pydantic
+* Nested department details in API responses
 
-🛠 Tech Stack
-🔹 Backend
+### 💰 Salary Tracking
 
-⚡ FastAPI — High-performance Python web framework
+* Maintain monthly salary records
+* Date-based salary storage
+* Retrieve employee salary history
 
-🗄 SQLAlchemy — ORM for database interactions
+### 📅 Attendance Management
 
-📦 Pydantic — Data validation & serialization
+* Daily attendance tracking
+* Attendance linked to individual employees
+* Enum-based attendance statuses such as:
 
-🗃 PostgreSQL
+  * Present
+  * Absent
+  * Late
+  * Sick Leave
+  * Vacation
 
-🔹 Frontend
+### 🤖 Employee Attrition Prediction
 
-⚛ React.js — Modern UI development
+* Integrated a **Machine Learning model** into the FastAPI backend
+* Predicts the likelihood of employee attrition using key employee attributes
+* Uses a **Logistic Regression** model for classification
+* Implements **feature scaling and preprocessing** using Scikit-learn
+* Provides predictions through a dedicated REST API endpoint
+* Returns the predicted attrition status and probability
 
-🌐 REST API integration with FastAPI
+## 🛠 Tech Stack
 
-📡 Dynamic data rendering
+### 🔹 Backend
 
-✨ Key Features
-🏢 Department Management
+* ⚡ **FastAPI** — High-performance Python web framework
+* 🗄 **SQLAlchemy** — ORM for database interactions
+* 📦 **Pydantic** — Data validation and serialization
+* 🗃 **PostgreSQL** — Relational database
+* 🤖 **Scikit-learn** — Machine Learning and preprocessing
+* 🐍 **Python** — Backend and ML development
 
-Create and manage departments
+### 🔹 Frontend
 
-Unique department validation
+* ⚛ **React.js** — Modern UI development
+* 🌐 **REST API** — Communication with FastAPI backend
+* 📡 **Dynamic data rendering**
+* 🎨 Responsive and component-based UI
 
-Structured department responses
+## 🧠 Machine Learning
 
-👨‍💼 Employee Management
+The project integrates a **Logistic Regression** model for employee attrition prediction.
 
-Add employees with department association
+The prediction pipeline includes:
 
-Email validation using Pydantic
+1. Collecting employee attributes through a FastAPI request
+2. Validating input using **Pydantic schemas**
+3. Preparing the input features using Pandas
+4. Scaling features using **StandardScaler**
+5. Generating an attrition prediction using the trained Logistic Regression model
+6. Returning the prediction and attrition probability through the REST API
 
-Nested department details in responses
+### Key Features Used
 
-💰 Salary Tracking
+## 🔒 Backend Architecture
 
-Monthly salary records per employee
+The backend follows a modular structure with a clear separation of concerns:
 
-Date-based salary storage
+* **Models** — Database models and relationships
+* **Schemas** — Request/response validation using Pydantic
+* **Routes** — API endpoint and business logic
+* **ML Model** — Employee attrition prediction
+* **Database** — PostgreSQL persistence
 
-Clean salary history retrieval
+Additional backend capabilities include:
 
-📅 Attendance System
+* Proper request validation
+* Nested relationship responses
+* RESTful API design
+* Scalable and modular structure
+* Interactive API documentation
+* ML model integration
 
-Enum-based attendance status
-(Present, Absent, Late, Sick Leave, Vacation, etc.)
+## 📊 API Documentation
 
-Daily attendance tracking
+FastAPI automatically generates interactive API documentation.
 
-Linked to specific employees
+### Swagger UI
 
-🔒 Backend Architecture Highlights
+```text
+/docs
+```
 
-Clean separation of:
+### ReDoc
 
-Models (Database)
+```text
+/redoc
+```
 
-Schemas (Validation)
+You can use Swagger UI to **test API endpoints directly from the browser**, including the employee attrition prediction endpoint.
 
-Routes (API Logic)
+## 🚀 Project Highlights
 
-Proper request validation
+HRBuddy combines **full-stack web development, REST API design, database management, and Machine Learning** into a single application.
 
-Nested relationship responses
+The project demonstrates practical experience with:
 
-Auto-generated API documentation via Swagger
-
-Scalable and modular design
-
-📊 API Documentation
-
-FastAPI automatically generates interactive documentation:
-
-Swagger UI → /docs
-
-ReDoc → /redoc
-
-Test all endpoints directly from the browser.
+* FastAPI backend development
+* React.js frontend development
+* REST API integration
+* SQLAlchemy ORM
+* PostgreSQL
+* Pydantic validation
+* Scikit-learn
+* Machine Learning model deployment
+* Feature preprocessing and scaling
+* Employee attrition prediction
