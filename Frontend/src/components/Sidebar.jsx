@@ -4,7 +4,8 @@ import {
   Building2, 
   Users, 
   CreditCard, 
-  CalendarCheck 
+  CalendarCheck,
+  BrainCircuit
 } from 'lucide-react';
 
 export default function Sidebar({ activeTab, setActiveTab }) {
@@ -14,6 +15,7 @@ export default function Sidebar({ activeTab, setActiveTab }) {
     { id: 'employees', label: 'Employees', icon: Users },
     { id: 'salaries', label: 'Salaries', icon: CreditCard },
     { id: 'attendance', label: 'Attendance', icon: CalendarCheck },
+    { id: 'prediction', label: 'Attrition Predictor', icon: BrainCircuit },
   ];
 
   return (

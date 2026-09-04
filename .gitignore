@@ -6,8 +6,14 @@ Backend/myvenv/
 # --- Environment Variables & Secrets ---
 .env
 *.env
-
+config_secret.py
+*_secret.py
 secrets.json
+
+# --- Frontend Dependencies & Builds ---
+**/node_modules/
+**/dist/
+
 
 # --- Python Cache & Compiled Files ---
 __pycache__/

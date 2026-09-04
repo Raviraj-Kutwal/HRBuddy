@@ -1,16 +1,16 @@
-from pydantic import BaseModel, EmailStr
-from typing import List, Optional
+from pydantic import BaseModel, EmailStr, Field
+from typing import List, Optional ,Literal
 from datetime import date as DateType
 from enum import Enum
 
-class AttendanceStatus(str, Enum):  # ✅ Note: str, Enum
-    PRESENT = "present"
-    ABSENT = "absent"
-    LATE = "late"
-    HALF_DAY = "half_day"
-    SICK_LEAVE = "sick_leave"
-    VACATION = "vacation"
-    UNPAID_LEAVE = "unpaid_leave"
+class AttendanceStatus(str, Enum):
+    PRESENT = "PRESENT"
+    ABSENT = "ABSENT"
+    LATE = "LATE"
+    HALF_DAY = "HALF_DAY"
+    SICK_LEAVE = "SICK_LEAVE"
+    VACATION = "VACATION"
+    UNPAID_LEAVE = "UNPAID_LEAVE"
 
 # =========================
 # Department Schemas
@@ -115,3 +115,21 @@ class EmployeeResponse(BaseModel):
     model_config = {
         "from_attributes": True
     }
+class UserInputMLPrediction(BaseModel):
+    OverTime: Literal[0, 1]
+    IsLabTechnician: Literal[0, 1]
+    Business_Travel_Frequency: Literal[0, 1]
+    YearsAtCompany: int
+    YearsInCurrentRole: int
+    MaritalStatus_Single: Literal[0, 1]
+
+class PredictionResponse(BaseModel):
+    Prediction: bool
+    Probability_of_Attrition: float = Field(..., alias="Probability of Attrition")
+    risk_level: Optional[str] = None
+    risk_percentage: Optional[float] = None
+
+    model_config = {
+        "populate_by_name": True
+    }
+

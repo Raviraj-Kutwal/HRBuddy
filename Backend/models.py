@@ -6,13 +6,13 @@ Base=declarative_base()
 
 
 class AttendanceStatus(enum.Enum):
-    PRESENT = "present"
-    ABSENT = "absent"
-    LATE = "late"
-    HALF_DAY = "half_day"
-    SICK_LEAVE = "sick_leave"
-    VACATION = "vacation"
-    UNPAID_LEAVE = "unpaid_leave"
+    PRESENT = "PRESENT"
+    ABSENT = "ABSENT"
+    LATE = "LATE"
+    HALF_DAY = "HALF_DAY"
+    SICK_LEAVE = "SICK_LEAVE"
+    VACATION = "VACATION"
+    UNPAID_LEAVE = "UNPAID_LEAVE"
 
 
 class Department(Base):

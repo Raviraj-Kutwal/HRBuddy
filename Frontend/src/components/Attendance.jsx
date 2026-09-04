@@ -13,25 +13,25 @@ export default function Attendance() {
   const [filterDept, setFilterDept] = useState('');
 
   // Form State
-  const [formData, setFormData] = useState({
-    employee_id: '',
-    date: new Date().toISOString().split('T')[0],
-    status: 'present'
-  });
+ const [formData, setFormData] = useState({
+  employee_id: '',
+  date: new Date().toISOString().split('T')[0],
+  status: 'PRESENT'
+});
 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [saving, setSaving] = useState(false);
 
   const statuses = [
-    { id: 'present', label: 'Present' },
-    { id: 'absent', label: 'Absent' },
-    { id: 'late', label: 'Late' },
-    { id: 'half_day', label: 'Half Day' },
-    { id: 'sick_leave', label: 'Sick Leave' },
-    { id: 'vacation', label: 'Vacation' },
-    { id: 'unpaid_leave', label: 'Unpaid Leave' }
-  ];
+  { id: 'PRESENT', label: 'Present' },
+  { id: 'ABSENT', label: 'Absent' },
+  { id: 'LATE', label: 'Late' },
+  { id: 'HALF_DAY', label: 'Half Day' },
+  { id: 'SICK_LEAVE', label: 'Sick Leave' },
+  { id: 'VACATION', label: 'Vacation' },
+  { id: 'UNPAID_LEAVE', label: 'Unpaid Leave' }
+];
 
   useEffect(() => {
     loadAttendanceContext();

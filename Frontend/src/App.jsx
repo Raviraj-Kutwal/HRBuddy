@@ -6,6 +6,7 @@ import Departments from './components/Departments';
 import Employees from './components/Employees';
 import Salaries from './components/Salaries';
 import Attendance from './components/Attendance';
+import Prediction from './components/Prediction';
 import './App.css';
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
     employees: 'Staff Personnel Database',
     salaries: 'Disbursement Schedules',
     attendance: 'Attendance Logging Protocol',
+    prediction: 'AI Attrition Prediction & Risk Analysis',
   };
 
   function renderViewContent() {
@@ -32,6 +34,8 @@ export default function App() {
         return <Salaries />;
       case 'attendance':
         return <Attendance />;
+      case 'prediction':
+        return <Prediction />;
       default:
         return <Dashboard setActiveTab={setActiveTab} />;
     }

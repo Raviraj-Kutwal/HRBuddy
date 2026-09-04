@@ -6,7 +6,8 @@ import {
   CalendarCheck,
   TrendingUp,
   Activity,
-  UserCheck
+  UserCheck,
+  BrainCircuit
 } from 'lucide-react';
 import { departmentsApi, employeesApi, salariesApi, attendanceApi } from '../services/api';
 
@@ -143,14 +144,24 @@ export default function Dashboard({ setActiveTab }) {
                 <span style={{ background: 'rgba(16,185,129,0.2)', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)', color: '#34d399', fontWeight: 'bold' }}>UI</span>
                 <span>Glassmorphism, CSS Tokens, Micro-transitions</span>
               </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', fontSize: '0.9rem' }}>
+                <span style={{ background: 'rgba(168,85,247,0.2)', padding: '0.25rem 0.5rem', borderRadius: 'var(--radius-sm)', color: '#c084fc', fontWeight: 'bold' }}>AI</span>
+                <span>Logistic Regression Attrition Risk Predictor</span>
+              </div>
             </div>
           </div>
           
-          <div style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Need fast data entries?</span>
-            <button className="btn btn-primary" onClick={() => setActiveTab('employees')}>
-              Add New Employee
-            </button>
+          <div style={{ marginTop: '2rem', paddingTop: '1rem', borderTop: '1px solid var(--border-color)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-muted)' }}>Proactive talent retention:</span>
+            <div style={{ display: 'flex', gap: '0.5rem' }}>
+              <button className="btn btn-secondary" onClick={() => setActiveTab('prediction')} style={{ fontSize: '0.85rem', padding: '0.6rem 1rem' }}>
+                <BrainCircuit size={15} />
+                Risk Predictor
+              </button>
+              <button className="btn btn-primary" onClick={() => setActiveTab('employees')} style={{ fontSize: '0.85rem', padding: '0.6rem 1rem' }}>
+                Add Employee
+              </button>
+            </div>
           </div>
         </div>
 

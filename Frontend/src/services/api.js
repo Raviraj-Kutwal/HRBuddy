@@ -92,3 +92,11 @@ export const attendanceApi = {
   update: (id, attendanceData) => client(`/attendance/${id}`, { method: 'PUT', body: attendanceData }),
   delete: (id) => client(`/attendance/${id}`, { method: 'DELETE' }),
 };
+
+// ==========================================
+// PREDICTION (ML ATTRITION) API
+// ==========================================
+export const predictionApi = {
+  predict: (predictionData) => client('/prediction', { method: 'POST', body: predictionData }),
+};
+

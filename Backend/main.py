@@ -5,7 +5,10 @@ from sqlalchemy.orm import Session
 from database import SessionLocal , engine
 import schemas
 import models 
-
+import pandas as pd
+import pickle
+import sklearn
+from sklearn.preprocessing import StandardScaler
 # Create all tables
 models.Base.metadata.create_all(bind=engine)
 app=FastAPI()
@@ -332,3 +335,31 @@ def delete_department(department_id: int, db: Session = Depends(get_db)):
     db.delete(department)
     db.commit()
     return {"message": "Department deleted successfully"}
+
+
+with open("new_model.pkl", "rb") as f:
+    model = pickle.load(f)
+    
+with open("scaler_new.pkl", "rb") as f:
+    scaler = pickle.load(f)
+    
+@app.post("/prediction", response_model=schemas.PredictionResponse)
+def makePrediction(data:schemas.UserInputMLPrediction):
+    raw_input = pd.DataFrame([{
+        "OverTime_Yes": data.OverTime,
+        "JobRole_Laboratory Technician": data.IsLabTechnician,
+        "BusinessTravel_Travel_Frequently": data.Business_Travel_Frequency,
+        "YearsAtCompany": data.YearsAtCompany,
+        "YearsInCurrentRole": data.YearsInCurrentRole,
+        "MaritalStatus_Single": data.MaritalStatus_Single
+    }])
+    scaled_input = scaler.transform(raw_input)
+    result = model.predict(scaled_input)[0]
+    probability = float(model.predict_proba(scaled_input)[0][1])
+
+    return {
+        "Prediction": bool(result),
+        "Probability of Attrition": probability,
+        "risk_level": "High" if probability >= 0.6 else "Moderate" if probability >= 0.35 else "Low",
+        "risk_percentage": round(probability * 100, 2)
+    }
